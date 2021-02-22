@@ -13,11 +13,11 @@
   	</select>
   	
   	<update id="updateBoard">
-  		update tbl_board set title = #{title}, content = #{content}, where no = #{no}
+  		update tbl_board set title = #{title}, content = #{content} where no = #{no}
   	</update>
   	
   	<delete id="deleteBoard">
-  		delete tbl_board where no = #{no}
+  		delete from tbl_board where no = #{no}
   	</delete>
   	
   	<select id="listBoard" resultType="com.webshw.domain.BoardVO">

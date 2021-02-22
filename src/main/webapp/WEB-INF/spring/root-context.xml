@@ -37,5 +37,6 @@
 
 	<!-- 	@Repository 패키지 스캔 -->
 	<context:component-scan base-package="com.webshw.persistence"></context:component-scan>
+	<context:component-scan base-package="com.webshw.service"></context:component-scan>
 	
 </beans>
