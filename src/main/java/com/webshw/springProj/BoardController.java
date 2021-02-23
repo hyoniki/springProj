@@ -1,5 +1,7 @@
 package com.webshw.springProj;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -8,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.webshw.domain.BoardVO;
 import com.webshw.service.BoardSercvice;
@@ -26,22 +30,70 @@ public class BoardController {
 		// 글 등록 페이지 호출
 		
 		logger.info("/register... get 호출");
-		return "registerBoard";
+		return "/board/registerBoard";
 	}
 	
 	@RequestMapping(value="/register", method=RequestMethod.POST)
-	public String registerPost(BoardVO vo, Model model) throws Exception {
-		
+	public String registerPost(BoardVO vo, RedirectAttributes rttr) throws Exception {
+		// 게시글 작성 페이지에서 submit버튼 클릭시
 		logger.info("/register... post 호출");
 		logger.debug(vo.toString());
 		
 		if(service.insert(vo)) {
-			model.addAttribute("result", "success");
+			rttr.addFlashAttribute("result", "success");
 		}
 		
-		return "/board/success";
+		return "redirect:/board/listAll";
 	}
 	
+	@RequestMapping(value="/listAll", method=RequestMethod.GET)
+	public void listAll(Model model) throws Exception {
+		logger.info("/listAll...get 호출");
+		List<BoardVO> lst = service.listAll();
+		model.addAttribute("boardList", lst);
+	}
 	
+	@RequestMapping(value="/read", method=RequestMethod.GET)
+	public void read(@RequestParam("no") int no, Model model) throws Exception {
+		// @RequestParam("no") int no -> int no = request.getParameter("no")
+		
+		logger.info("/read... get 호출");
+		System.out.println("no : " + no);
+		
+		model.addAttribute("board", service.read(no));
+		
+	}
+	
+	@RequestMapping(value="/remove", method=RequestMethod.GET)
+	public String delBoard(@RequestParam("no") int no, RedirectAttributes rttr) throws Exception {
+		
+		logger.info("/remove... get호출");
+		
+		if (service.remove(no)) {
+			rttr.addFlashAttribute("result", "success");
+		}
+		
+		return "redirect:/board/listAll";
+	}
+	
+	@RequestMapping(value="/modi", method=RequestMethod.GET)
+	public void modifyBoard(@RequestParam("no") int no, Model model) throws Exception {
+		logger.info("/modi... get호출");
+		BoardVO vo = service.read(no);
+		System.out.println(vo.toString());
+		model.addAttribute("boardinfo", vo);
+	}
+	
+	@RequestMapping(value="/modi", method=RequestMethod.POST)
+	public String modifyBoard(BoardVO vo, RedirectAttributes rttr) throws Exception {
+		logger.info("/modi... post호출");
+		
+		String result = "fail";
+		if(service.modify(vo)) {
+			result = "success";
+		}
+		
+		return "redirect:/board/read?no=" + vo.getNo() + "&result=" + result;
+	}
 	
 }

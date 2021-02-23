@@ -16,9 +16,9 @@
   		update tbl_board set title = #{title}, content = #{content} where no = #{no}
   	</update>
   	
-  	<delete id="deleteBoard">
-  		delete from tbl_board where no = #{no}
-  	</delete>
+  	<update id="deleteBoard">
+  		update tbl_board set isdelete = 'Y' where no = #{no}
+  	</update>
   	
   	<select id="listBoard" resultType="com.webshw.domain.BoardVO">
   		select * from tbl_board order by no desc

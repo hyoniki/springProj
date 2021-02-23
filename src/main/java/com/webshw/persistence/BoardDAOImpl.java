@@ -36,7 +36,7 @@ public class BoardDAOImpl implements BoardDAO {
 
 	@Override
 	public int delete(int no) throws Exception {
-		return ses.delete(nameSpace + ".deleteBoard", no);
+		return ses.update(nameSpace + ".deleteBoard", no);
 	}
 
 	@Override
