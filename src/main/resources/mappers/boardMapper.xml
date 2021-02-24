@@ -23,4 +23,14 @@
   	<select id="listBoard" resultType="com.webshw.domain.BoardVO">
   		select * from tbl_board order by no desc
   	</select>
+  	
+<!--   	페이징 #{page}부터 20개씩 출력 -->
+  	<select id="listBoardPaging" resultType="com.webshw.domain.BoardVO">
+  		select * from tbl_board order by no desc limit #{page}, 20
+  	</select>
+  	
+<!--   	페이징 제약 조건(PagingCriteria를 이용한 페이징) -->
+   	<select id="listBoardCriteria" resultType="com.webshw.domain.BoardVO">
+  		select * from tbl_board order by no desc limit #{pageStart}, #{perPageNum}
+  	</select>
   </mapper>

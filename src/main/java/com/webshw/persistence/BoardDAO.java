@@ -3,6 +3,7 @@ package com.webshw.persistence;
 import java.util.List;
 
 import com.webshw.domain.BoardVO;
+import com.webshw.domain.PagingCriteria;
 
 public interface BoardDAO {
 	
@@ -20,5 +21,11 @@ public interface BoardDAO {
 	
 	// 전체 글 조회
 	public List<BoardVO> listBoard() throws Exception;
+	
+	// 페이징
+	public List<BoardVO> listBoardPaging(int page) throws Exception;
+	
+	// 
+	public List<BoardVO> listBoardCriteria(PagingCriteria cri) throws Exception;
 	
 }

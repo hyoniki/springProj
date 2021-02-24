@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.webshw.domain.BoardVO;
+import com.webshw.domain.PagingCriteria;
 import com.webshw.persistence.BoardDAO;
 
 @Service
@@ -57,6 +58,11 @@ public class BoardSercviceImpl implements BoardSercvice {
 	public List<BoardVO> listAll() throws Exception {
 		List<BoardVO> lst = dao.listBoard();
 		return lst;
+	}
+
+	@Override
+	public List<BoardVO> listCriteria(PagingCriteria cri) throws Exception {
+		return dao.listBoardCriteria(cri);
 	}
 
 }
