@@ -108,6 +108,7 @@
 					<div class="col-sm-10">
 						${board.content }
 					</div>
+				</div>
 					</c:when>
 					
 					<c:otherwise>
@@ -144,7 +145,7 @@
 					<div class="form-group">
 					<label class="control-label col-sm-2" for="content">내 용 :</label>
 					<div class="col-sm-10">
-						
+					</div>
 					</div>
 					</c:otherwise>
 				</c:choose>
@@ -156,6 +157,5 @@
 					</div>
 				</div>
 		</div>
-	</div>
 	<%@include file="../templatefooter.jsp" %>
 </body>
