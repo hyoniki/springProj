@@ -70,7 +70,9 @@
 	<div class="content-wrapper">
 		<div class="container">
 		<h1>게시판 글쓰기 페이지</h1><hr />
-			
+				
+				<c:choose>
+					<c:when test='${isdelete == "N" }'>
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="writer">글 번호 :</label>
 					<div class="col-sm-10">
@@ -106,6 +108,46 @@
 					<div class="col-sm-10">
 						${board.content }
 					</div>
+					</c:when>
+					
+					<c:otherwise>
+					<div class="form-group">
+					<label class="control-label col-sm-2" for="writer">글 번호 :</label>
+					<div class="col-sm-10">
+						
+					</div>
+					</div>
+					<div class="form-group">
+					<label class="control-label col-sm-2" for="title">작성자 :</label>
+					<div class="col-sm-10">
+						
+					</div>
+					</div>
+					<div class="form-group">
+					<label class="control-label col-sm-2" for="content">작성일 :</label>
+					<div class="col-sm-10">
+						
+					</div>
+					</div>
+					<div class="form-group">
+					<label class="control-label col-sm-2" for="content">조회수 :</label>
+					<div class="col-sm-10">
+						
+					</div>
+					</div>
+					<div class="form-group">
+					<label class="control-label col-sm-2" for="content">제 목 :</label>
+					<div class="col-sm-10">
+						
+					</div>
+					</div>
+					<div class="form-group">
+					<label class="control-label col-sm-2" for="content">내 용 :</label>
+					<div class="col-sm-10">
+						
+					</div>
+					</c:otherwise>
+				</c:choose>
 					
 					<div class="box-footer">
 				        <button type="button" class="btn btn-success" id="rewriteBoard" onclick="location.href='/board/modi?no=${board.no }'">수정하기</button>
