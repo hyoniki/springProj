@@ -27,5 +27,7 @@ public interface BoardDAO {
 	
 	// 
 	public List<BoardVO> listBoardCriteria(PagingCriteria cri) throws Exception;
+
+	public int getTotalBoardCnt() throws Exception;
 	
 }

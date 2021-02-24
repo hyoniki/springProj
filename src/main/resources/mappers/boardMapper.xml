@@ -33,4 +33,9 @@
    	<select id="listBoardCriteria" resultType="com.webshw.domain.BoardVO">
   		select * from tbl_board order by no desc limit #{pageStart}, #{perPageNum}
   	</select>
+  	
+<!--   	전체 게시물 개수 -->
+  	<select id="getTotalBoardCnt" resultType="int">
+  		select count(*) from tbl_board
+  	</select>
   </mapper>

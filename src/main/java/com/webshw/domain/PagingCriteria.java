@@ -32,6 +32,10 @@ public class PagingCriteria {
 	public int getPerPageNum() {
 		return this.perPageNum;
 	}
+	
+	public int getPage() {
+		return this.page;
+	}
 
 	@Override
 	public String toString() {

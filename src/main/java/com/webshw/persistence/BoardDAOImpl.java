@@ -62,4 +62,9 @@ public class BoardDAOImpl implements BoardDAO {
 		return ses.selectList(nameSpace + ".listBoardCriteria", cri);
 	}
 
+	@Override
+	public int getTotalBoardCnt() throws Exception {
+		return ses.selectOne(nameSpace + ".getTotalBoardCnt");
+	}
+
 }
