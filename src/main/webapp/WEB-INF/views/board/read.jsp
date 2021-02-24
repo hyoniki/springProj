@@ -60,6 +60,7 @@
 	}
 
 	$(function() {
+		
 		let result = getParameter('result');
 		console.log(result);
 		if (result == 'success') {
@@ -67,7 +68,14 @@
 		} else if (result == 'fail') {
 			alert("수정을 실패했습니다!");
 		}
+		
+		if (${board.isdelete == 'Y'}) {
+			alert("삭제된 게시물입니다!");
+			history.back();
+		}
+			
 	})
+	
 </script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
