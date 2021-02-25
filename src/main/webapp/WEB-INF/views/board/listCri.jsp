@@ -126,71 +126,72 @@
 
 				<c:choose>
 					<c:when test="${param.searchWord == null }">
-				<div class="text-center">
-					<ul class="pagination"
-						style="position: absolute; margin-left: 500px;">
-						<c:if test="${pagingParam.prev }">
-							<li class="page-item"><a class="page-link"
-								href="listCri?page=${param.page - 1}">Prev</a></li>
-						</c:if>
+						<div class="text-center">
+							<ul class="pagination"
+								style="position: absolute; margin-left: 500px;">
+								<c:if test="${pagingParam.prev }">
+									<li class="page-item"><a class="page-link"
+										href="listCri?page=${param.page - 1}">Prev</a></li>
+								</c:if>
 
-						<c:forEach begin="${pagingParam.startPage }"
-							end="${pagingParam.endPage }" var="pageNo">
-							<li class="page-item"><a class="page-link"
-								href="listCri?page=${pageNo }">${pageNo }</a></li>
-						</c:forEach>
+								<c:forEach begin="${pagingParam.startPage }"
+									end="${pagingParam.endPage }" var="pageNo">
+									<li class="page-item"><a class="page-link"
+										href="listCri?page=${pageNo }">${pageNo }</a></li>
+								</c:forEach>
 
-						<c:if test="${pagingParam.next }">
-							<li class="page-item"><a class="page-link"
-								href="listCri?page=${param.page + 1}">Next</a></li>
-						</c:if>
-						</c:when>
-						<c:when test="${param.searchWord != null }">
-				<div class="text-center">
-					<ul class="pagination"
-						style="position: absolute; margin-left: 500px;">
-						<c:if test="${pagingParam.prev }">
-							<li class="page-item"><a class="page-link"
-								href="search?searchType=${param.searchType }&searchWord=${param.searchWord }&page=${param.page - 1}">Prev</a></li>
-						</c:if>
+								<c:if test="${pagingParam.next }">
+									<li class="page-item"><a class="page-link"
+										href="listCri?page=${param.page + 1}">Next</a></li>
+								</c:if>
+					</c:when>
+					<c:when test="${param.searchWord != null }">
+						<div class="text-center">
+							<ul class="pagination"
+								style="position: absolute; margin-left: 500px;">
+								<c:if test="${pagingParam.prev }">
+									<li class="page-item"><a class="page-link"
+										href="search?searchType=${param.searchType }&searchWord=${param.searchWord }&page=${param.page - 1}">Prev</a></li>
+								</c:if>
 
-						<c:forEach begin="${pagingParam.startPage }"
-							end="${pagingParam.endPage }" var="pageNo">
-							<li class="page-item"><a class="page-link"
-								href="search?searchType=${param.searchType }&searchWord=${param.searchWord }&page=${pageNo }">${pageNo }</a></li>
-						</c:forEach>
+								<c:forEach begin="${pagingParam.startPage }"
+									end="${pagingParam.endPage }" var="pageNo">
+									<li class="page-item"><a class="page-link"
+										href="search?searchType=${param.searchType }&searchWord=${param.searchWord }&page=${pageNo }">${pageNo }</a></li>
+								</c:forEach>
 
-						<c:if test="${pagingParam.next }">
-							<li class="page-item"><a class="page-link"
-								href="search?searchType=${param.searchType }&searchWord=${param.searchWord }&page=${param.page + 1}">Next</a></li>
-						</c:if>
-						</c:when>
-					</c:choose>
-					</ul>
-				</div>
+								<c:if test="${pagingParam.next }">
+									<li class="page-item"><a class="page-link"
+										href="search?searchType=${param.searchType }&searchWord=${param.searchWord }&page=${param.page + 1}">Next</a></li>
+								</c:if>
+					</c:when>
+				</c:choose>
+				</ul>
+	</div>
 
-				<div>
-					<form action="/board/search" method="GET">
-						<select name="searchType">
-							<option value="n">----------------</option>
-							<option value="title">제목</option>
-							<option value="writer">작성자</option>
-							<option value="content">내용</option>
-						</select> <input type="text" name="searchWord" id="searchWord" />
-						<button type="submit" id="goSearch" class="btn btn-default">검색</button>
-					</form>
-				</div>
+	<div>
+		<form action="/board/search" method="GET">
+			<select name="searchType">
+				<option value="n">----------------</option>
+				<option value="title">제목</option>
+				<option value="writer">작성자</option>
+				<option value="content">내용</option>
+			</select> <input type="text" name="searchWord" id="searchWord" />
+			<input type="hidden" name="page" value="1">
+			<button type="submit" id="goSearch" class="btn btn-default">검색</button>
+		</form>
+	</div>
 
-				<div>
-					<button type="button" class="btn btn-info" style="float: right;"
-						onclick="location.href='/board/register'">글쓰기</button>
-				</div>
+	<div>
+		<button type="button" class="btn btn-info" style="float: right;"
+			onclick="location.href='/board/register'">글쓰기</button>
+	</div>
 
-			</c:when>
-			<c:otherwise>
+	</c:when>
+	<c:otherwise>
 				게시물이 존재하지 않거나, 데이터를 얻어오지 못했습니다.
 			</c:otherwise>
-		</c:choose>
+	</c:choose>
 	</div>
 	<%@include file="../templatefooter.jsp"%>
 </body>

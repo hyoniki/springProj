@@ -22,4 +22,16 @@ select * from test.tbl_board order by no desc limit 0, 20;
 
 select * from test.tbl_board where title like '%수%';
 
-select count(*) from test.tbl_board where title like '%수%' order by no desc;
+select * from test.tbl_board where title like '%수%' order by no desc limit 0, 10;
+
+-- 댓글 테이블 생성
+create table test.tbl_reply (
+no int not null auto_increment,
+bno int not null default 0,
+replytext varchar(500) not null,
+replyer varchar(50) not null,
+regdate timestamp default now(),
+updatedate timestamp default now(),
+primary key(no));
+
+alter table test.tbl_reply add constraint fk_board foreign key (bno) references tbl_board(no);
