@@ -38,4 +38,43 @@
   	<select id="getTotalBoardCnt" resultType="int">
   		select count(*) from tbl_board
   	</select>
+  	
+<!--   	게시물 검색 -->
+  	<select id="searchBoard" resultType="com.webshw.domain.BoardVO">
+  		select * from tbl_board where
+  		<if test="searchType == 'title'">
+  			title like concat('%', #{searchWord}, '%')
+  		</if>
+  		
+  		<if test="searchType == 'writer'">
+  			writer like concat('%', #{searchWord}, '%')
+  		</if>
+  		
+   		<if test="searchType == 'content'">
+  			content like concat('%', #{searchWord}, '%')
+  		</if>
+  		
+  		order by no desc limit #{pageStart}, #{perPageNum}
+  	</select>
+  	
+<!--   	검색 결과 전체 개수 -->
+  	
+  	<select id="searchTotal" resultType="int">
+  		select count(*) from tbl_board where
+  		<if test="searchType == 'title'">
+  			title like concat('%', #{searchWord}, '%')
+  		</if>
+  		
+  		<if test="searchType == 'writer'">
+  			writer like concat('%', #{searchWord}, '%')
+  		</if>
+  		
+   		<if test="searchType == 'content'">
+  			content like concat('%', #{searchWord}, '%')
+  		</if>
+
+  	</select>
+  	
+  	
+  	
   </mapper>

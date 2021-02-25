@@ -41,25 +41,39 @@
 <link rel="stylesheet"
 	href="../resources/plugins/summernote/summernote-bs4.min.css">
 <script type="text/javascript">
+	function getLink() {
+		var link = document.location.href;
+		return link;
+	}
 
 	$(function() {
-		
-		var link = document.location.href;
-		console.log(link);
-		
+
+		let link = getLink();
+
+		if (link == "http://localhost:8081/board/listCri") {
+			location.href = "http://localhost:8081/board/listCri?page=1";
+		}
+
 		let result = '${result }';
 
 		if (result == 'success') {
 			alert("작성한 글이 등록되었습니다!");
 		}
-		
-		let thispage = ${param.page };
-		let endpage = ${param.page > pagingParam.endPage };
-		
+
+		let thispage = $
+		{
+			param.page
+		}
+		;
+		let endpage = $
+		{
+			param.page > pagingParam.endPage
+		}
+		;
+
 		console.log(thispage);
 		console.log(endpage);
-		
-		
+
 	})
 </script>
 </head>
@@ -96,7 +110,8 @@
 							<c:otherwise>
 								<tr>
 									<td>${board.no }</td>
-									<td><a href="/board/read?no=${board.no }&pageNo=${param.page }">
+									<td><a
+										href="/board/read?no=${board.no }&page=${param.page }">
 											${board.title } </a>
 									<td>${board.writer }</td>
 									<td><span class="sendTime" id="${status.count }"><fmt:formatDate
@@ -108,43 +123,64 @@
 						</c:choose>
 					</c:forEach>
 				</table>
-												
+
+				<c:choose>
+					<c:when test="${param.searchWord == null }">
 				<div class="text-center">
-					<ul class="pagination" style="position: absolute; margin-left: 500px;">
-					<c:if test="${pagingParam.prev }">
-							<li class="page-item">
-								<a class="page-link" href="listCri?page=${param.page - 1}">Prev</a>
-							</li>
-					</c:if>
-					
-						<c:forEach begin="${pagingParam.startPage }" end="${pagingParam.endPage }" var="pageNo">
-							<li class="page-item">
-								<a class="page-link" href="listCri?page=${pageNo }">${pageNo }</a>
-							</li>
+					<ul class="pagination"
+						style="position: absolute; margin-left: 500px;">
+						<c:if test="${pagingParam.prev }">
+							<li class="page-item"><a class="page-link"
+								href="listCri?page=${param.page - 1}">Prev</a></li>
+						</c:if>
+
+						<c:forEach begin="${pagingParam.startPage }"
+							end="${pagingParam.endPage }" var="pageNo">
+							<li class="page-item"><a class="page-link"
+								href="listCri?page=${pageNo }">${pageNo }</a></li>
 						</c:forEach>
-						
-<%-- 					<c:if test="${param.page > pagingParam.endPage }"> --%>
-					<c:if test="${pagingParam.next }">
-							<li class="page-item">
-								<a class="page-link" href="listCri?page=${param.page + 1}">Next</a>
-							</li>
-					</c:if>
-<%-- 					</c:if> --%>
-					
+
+						<c:if test="${pagingParam.next }">
+							<li class="page-item"><a class="page-link"
+								href="listCri?page=${param.page + 1}">Next</a></li>
+						</c:if>
+						</c:when>
+						<c:when test="${param.searchWord != null }">
+				<div class="text-center">
+					<ul class="pagination"
+						style="position: absolute; margin-left: 500px;">
+						<c:if test="${pagingParam.prev }">
+							<li class="page-item"><a class="page-link"
+								href="search?searchType=${param.searchType }&searchWord=${param.searchWord }&page=${param.page - 1}">Prev</a></li>
+						</c:if>
+
+						<c:forEach begin="${pagingParam.startPage }"
+							end="${pagingParam.endPage }" var="pageNo">
+							<li class="page-item"><a class="page-link"
+								href="search?searchType=${param.searchType }&searchWord=${param.searchWord }&page=${pageNo }">${pageNo }</a></li>
+						</c:forEach>
+
+						<c:if test="${pagingParam.next }">
+							<li class="page-item"><a class="page-link"
+								href="search?searchType=${param.searchType }&searchWord=${param.searchWord }&page=${param.page + 1}">Next</a></li>
+						</c:if>
+						</c:when>
+					</c:choose>
 					</ul>
 				</div>
-				
+
 				<div>
-					<form action="list.bo" method="GET">
-						<select name="searchQuery">
+					<form action="/board/search" method="GET">
+						<select name="searchType">
+							<option value="n">----------------</option>
 							<option value="title">제목</option>
 							<option value="writer">작성자</option>
-							<option value="content">본문</option>
+							<option value="content">내용</option>
 						</select> <input type="text" name="searchWord" id="searchWord" />
-						<button type="submit" class="btn btn-default">검색</button>
+						<button type="submit" id="goSearch" class="btn btn-default">검색</button>
 					</form>
 				</div>
-				
+
 				<div>
 					<button type="button" class="btn btn-info" style="float: right;"
 						onclick="location.href='/board/register'">글쓰기</button>

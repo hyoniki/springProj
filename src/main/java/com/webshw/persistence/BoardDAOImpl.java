@@ -1,6 +1,8 @@
 package com.webshw.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.webshw.domain.BoardVO;
 import com.webshw.domain.PagingCriteria;
+import com.webshw.domain.SearchCriteria;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO {
@@ -65,6 +68,23 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public int getTotalBoardCnt() throws Exception {
 		return ses.selectOne(nameSpace + ".getTotalBoardCnt");
+	}
+
+	@Override
+	public List<BoardVO> goSearch(SearchCriteria scri, PagingCriteria cri) throws Exception {
+		
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("searchType", scri.getSearchType());
+		param.put("searchWord", scri.getSearchWord());
+		param.put("pageStart", cri.getPageStart());
+		param.put("perPageNum", cri.getPerPageNum());
+		
+		return ses.selectList(nameSpace + ".searchBoard", param);
+	}
+
+	@Override
+	public int searchTotal(SearchCriteria scri) throws Exception {
+		return ses.selectOne(nameSpace + ".searchTotal", scri);
 	}
 
 }

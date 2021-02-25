@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.webshw.domain.BoardVO;
 import com.webshw.domain.PagingCriteria;
 import com.webshw.domain.PagingParam;
+import com.webshw.domain.SearchCriteria;
 import com.webshw.service.BoardSercvice;
 
 @Controller
@@ -107,7 +108,7 @@ public class BoardController {
 		
 		PagingParam pp = new PagingParam();
 		pp.setCri(cri);
-		pp.setTotalCount(service.getTotalBoardCnt());
+		pp.setTotalCount(service.getTotalBoardCnt()); // 게시물 개수 가져오기
 		
 		System.out.println(pp.toString());
 		
@@ -115,5 +116,21 @@ public class BoardController {
 		
 	}
 	
+	@RequestMapping(value="/search", method=RequestMethod.GET)
+	public String search(SearchCriteria scri, Model model, PagingCriteria cri) throws Exception {
+		logger.info("검색을 시작합니다...");
+		
+		model.addAttribute("boardList", service.goSearch(scri, cri));
+		
+		PagingParam pp = new PagingParam();
+		pp.setCri(cri);
+		pp.setTotalCount(service.searchTotal(scri));
+		
+		System.out.println(pp.toString());
+		
+		model.addAttribute("pagingParam", pp);
+		
+		return "/board/listCri";
+	}
 	
 }

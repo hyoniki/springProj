@@ -19,3 +19,7 @@ insert into test.tbl_board(title, content, writer)
 (select title, content, writer from test.tbl_board);
 
 select * from test.tbl_board order by no desc limit 0, 20;
+
+select * from test.tbl_board where title like '%수%';
+
+select count(*) from test.tbl_board where title like '%수%' order by no desc;
