@@ -44,7 +44,7 @@
         <a href="/" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="/board/listAll" class="nav-link">board</a>
+        <a href="/board/listCri" class="nav-link">board</a>
       </li>
     </ul>
 

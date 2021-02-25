@@ -73,7 +73,14 @@
 			alert("삭제된 게시물입니다!");
 			history.back();
 		}
-			
+		
+		let pageNo = getParameter('pageNo');
+		console.log(pageNo);
+		if (pageNo == "") {
+			alert("잘 못된 접근입니다!");
+			location.href = "http://localhost:8081/board/listCri?page=1";
+		}
+		
 	})
 	
 </script>
@@ -152,7 +159,7 @@
 				<button type="button" class="btn btn-info" id="deleteBoard"
 					onclick="location.href='/board/remove?no=${board.no }'">삭제하기</button>
 				<button type="button" class="btn btn-primary"
-					onclick="location.href='/board/listAll'">리스트페이지로</button>
+					onclick='location.href="/board/listCri?page=${param.pageNo }"'>리스트페이지로</button>
 			</div>
 		</div>
 	</div>

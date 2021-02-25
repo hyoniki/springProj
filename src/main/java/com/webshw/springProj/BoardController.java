@@ -75,7 +75,7 @@ public class BoardController {
 			rttr.addFlashAttribute("result", "success");
 		}
 		
-		return "redirect:/board/listAll";
+		return "redirect:/board/listCri";
 	}
 	
 	@RequestMapping(value="/modi", method=RequestMethod.GET)

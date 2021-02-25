@@ -18,4 +18,4 @@ update tbl_board set title = '제목 변경', content = '내용 변경' where no
 insert into test.tbl_board(title, content, writer)
 (select title, content, writer from test.tbl_board);
 
-select * from test.tbl_board order by no desc limit 0, 10;
+select * from test.tbl_board order by no desc limit 0, 20;

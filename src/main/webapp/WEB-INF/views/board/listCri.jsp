@@ -41,7 +41,12 @@
 <link rel="stylesheet"
 	href="../resources/plugins/summernote/summernote-bs4.min.css">
 <script type="text/javascript">
+
 	$(function() {
+		
+		var link = document.location.href;
+		console.log(link);
+		
 		let result = '${result }';
 
 		if (result == 'success') {
@@ -53,6 +58,7 @@
 		
 		console.log(thispage);
 		console.log(endpage);
+		
 		
 	})
 </script>
@@ -90,8 +96,8 @@
 							<c:otherwise>
 								<tr>
 									<td>${board.no }</td>
-									<td><a href="/board/read?no=${board.no }">
-											${board.title } </a> <span id=""></span></td>
+									<td><a href="/board/read?no=${board.no }&pageNo=${param.page }">
+											${board.title } </a>
 									<td>${board.writer }</td>
 									<td><span class="sendTime" id="${status.count }"><fmt:formatDate
 												value="${board.regdate }" type="both"
