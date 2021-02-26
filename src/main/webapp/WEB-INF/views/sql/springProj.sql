@@ -10,6 +10,7 @@ primary key(no)
 );
 
 select * from tbl_board;
+select * from tbl_reply;
 
 insert into tbl_board(title, content, writer) values ('제목', '내용', '작성자');
 

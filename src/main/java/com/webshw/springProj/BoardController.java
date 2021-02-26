@@ -89,6 +89,7 @@ public class BoardController {
 	
 	@RequestMapping(value="/modi", method=RequestMethod.POST)
 	public String modifyBoard(BoardVO vo, RedirectAttributes rttr) throws Exception {
+		// 게시물을 수정하기 위해 게시물을 불러서 수정페이지에 출력
 		logger.info("/modi... post호출");
 		
 		String result = "fail";
@@ -101,6 +102,7 @@ public class BoardController {
 	
 	@RequestMapping(value="/listCri", method=RequestMethod.GET)
 	public void listAll(PagingCriteria cri, Model model) throws Exception {
+		// 수정페이지에서 유저가 수정 후 저장 버튼을 눌렀을 때 실제 수정
 		logger.info("페이징을 이용한 전체 목록 출력......");
 		model.addAttribute("boardList", service.listCriteria(cri)); // 게시물 데이터
 		

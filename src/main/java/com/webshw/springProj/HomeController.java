@@ -36,4 +36,11 @@ public class HomeController {
 		return "index";
 	}
 	
+	@RequestMapping(value="/test")
+	public String ajaxTest() {
+		System.out.println("에이젝스 호출");
+		
+		return "testJson";
+	}
+	
 }

@@ -14,7 +14,7 @@
   	</select>
   	
   	<update id="update">
-  		update tbl_reply set replytext=#{replytext}, updatedate = now() where bno = #{no}
+  		update tbl_reply set replytext=#{replytext}, updatedate = now() where no = #{no}
   	</update>
   	
   	<delete id="delete">

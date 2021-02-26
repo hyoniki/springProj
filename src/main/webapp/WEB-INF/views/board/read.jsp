@@ -58,9 +58,69 @@
 
 		return -1; // 모든 배열 요소를 다 검색해도 매개변수가 없을때
 	}
-
-	$(function() {
+	
+	function callReplyList() {
 		
+		$("#replyBox").empty();
+		
+		let bno = ${board.no};
+		let output = '<div class="list-group">';
+		
+		$.getJSON("/replies/all/" + bno, function(data) {
+	         $(data).each(function(index, item){
+	             output += '<li class="list-group-item list-group-item-action"><span>' + this.no + '</span><div>' + this.replytext + '</div><div><span>' 
+	             + new Date(this.updatedate).toLocaleString() + '</span>' + '<span>' + this.replyer + '</span></div></li>' + 
+	             '<li><span id="' + item.no + '" onclick="gomodify(' + item.no + ');" style="margin-right: 10px;"><img src="../resources/img/modify.png" width="30px" height="30px" /></span>' +
+	             '<span onclick="godelete(' + item.no + ');"><img src="../resources/img/delete.png" width="30px" height="30px" /></span></li>';
+	          });
+		output += '</div>';
+		$("#replyBox").append(output);
+		});
+		
+	}
+	
+	function showReplyBox() {
+		$("#inputReplyBox").show();
+	}
+	
+	function addReply() {
+			let replyer = $("#newReplyWriter").val();
+			let replytext = $("#newReplyText").val();
+			let bno = ${param.no};
+			
+			$.ajax({
+				  method: "POST",
+				  url: "/replies",
+				  headers : { // 요청하는 데이터의 헤더에 전송
+					"Content-Type" : "application/json",
+					"X-HTTP-Method-Override" : "POST"
+				  },
+				  dataType: "text", // 응답 받는 데이터 타입
+				  data : JSON.stringify({ // 요청하는 데이터
+					 bno : bno,
+					 replyer : replyer,
+					 replytext : replytext
+				  }),
+				  success : function(result) {
+					  if (result == "success") {
+						  alert("댓글 등록 완료!");
+						  callReplyList();
+					  }
+				  }
+				});
+			
+	}
+	
+	function gomodify(no) {
+		
+		$("#replyno").val(no);
+		$("#modifyBox").show();
+		
+		
+		
+	}
+	
+	$(function() {
 		let result = getParameter('result');
 		console.log(result);
 		if (result == 'success') {
@@ -75,15 +135,31 @@
 		}
 		
 		let page = getParameter('page');
-		console.log(page);
+		
 		if (page == "") {
 			alert("잘 못된 접근입니다!");
 			location.href = "http://localhost:8081/board/listCri?page=1";
 		}
 		
+		callReplyList();
 	})
 	
 </script>
+<style type="text/css">
+	#modifyBox {
+		width: 400px;
+		height: 150px;
+		background-color: lightgray;
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		margin-top: -50px;
+		margin-left: -150px;
+		padding: 15px;
+		z-index: 999;
+		display: none;
+	}
+</style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 	<%@include file="../templateHeader.jsp"%>
@@ -152,7 +228,74 @@
 					</div>
 				</c:otherwise>
 			</c:choose>
-
+			
+			<div id="modifyBox">
+				<div>댓글 수정</div>
+				<input type="hidden" id="replyno" />
+				<div>
+					<input type="text" id="replytext" />
+					<button type="button" id="replyModBtn" onclick="modiProc();">수정</button>
+					<button type="button" id="replyModClose" onclick="modiBoxClose();">취소</button>
+				</div>
+			</div>
+			
+			<script>
+				function modiProc() {
+					$("#modifyBox").hide();
+					let no = $("#replyno").val();
+					let replytext = $("#replytext").val();
+					
+					$.ajax({
+						  method: "PUT",
+						  url: "/replies/" + no,
+						  headers : { // 요청하는 데이터의 헤더에 전송
+							"Content-Type" : "application/json",
+							"X-HTTP-Method-Override" : "PUT"
+						  },
+						  dataType: "text", // 응답 받는 데이터 타입
+						  data : JSON.stringify({ // 요청하는 데이터
+							 no : no,
+							 replytext : replytext
+						  }),
+						  success : function(result) {
+							  if (result == "success") {
+								  alert("댓글 수정 완료!");
+								  callReplyList(); // 댓글 다시 호출
+							  }
+						  }
+						});
+					
+				}
+			
+				function modiBoxClose() {
+					$("#modifyBox").hide();
+				}
+				
+				function godelete(no) {
+					
+					$.ajax({
+						  method: "DELETE",
+						  url: "/replies/" + no,
+						  headers : { // 요청하는 데이터의 헤더에 전송
+							"Content-Type" : "application/json",
+							"X-HTTP-Method-Override" : "DELETE"
+						  },
+						  dataType: "text", // 응답 받는 데이터 타입
+						  data : JSON.stringify({ // 요청하는 데이터
+							 no : no,
+						  }),
+						  success : function(result) {
+							  if (result == "success") {
+								  alert("댓글 삭제 완료!");
+								  callReplyList(); // 댓글 다시 호출
+							  }
+						  }
+						});
+					
+				}
+				
+			</script>
+			
 			<div class="box-footer">
 				<button type="button" class="btn btn-success" id="rewriteBoard"
 					onclick="location.href='/board/modi?no=${board.no }'">수정하기</button>
@@ -161,7 +304,21 @@
 				<button type="button" class="btn btn-primary"
 					onclick='location.href="/board/listCri?page=${param.page }"'>리스트페이지로</button>
 			</div>
+			
+			<button type="button" class="btn btn-primary" onclick="showReplyBox();">댓글달기</button>
+			
+			<div id="inputReplyBox" style="border: 1px dotted gray; display: none">
+				<div>
+					작성자 : <input type="text" name="replyer" id="newReplyWriter" />
+				</div>
+				<div>
+					댓글 입력 : <input type="text" name="replytext" id="newReplyText" />
+				</div>
+				<button id="replyAddBtn" onclick="addReply();">ADD Reply</button>
+			</div>
+			<div id="replyBox" style="padding: 10px; border-bottom: 1px solid gray;"></div>
 		</div>
 	</div>
+
 	<%@include file="../templatefooter.jsp"%>
 </body>
