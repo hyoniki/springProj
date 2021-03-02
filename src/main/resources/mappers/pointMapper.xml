@@ -6,7 +6,7 @@
   <mapper namespace="com.webshw.mapper.PointMapper">
   	
   	<update id="updatepoint">
-  		update table tbl_user set upoint = upoint + #{point} where uid = #{uid}
+  		update tbl_user set upoint = upoint + #{point} where uid = #{uid}
   	</update>
   	
   </mapper>

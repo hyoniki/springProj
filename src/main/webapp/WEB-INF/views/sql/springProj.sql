@@ -47,6 +47,7 @@ uname varchar(100),
 upoint int(11),
 primary key (uid));
 
+alter table tbl_user modify upoint int default 0;
 
 -- message 테이블 생성
 create table tbl_message(
