@@ -21,8 +21,11 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	<!-- 10MB 사이즈의 파일을 업로드할 수 있도록 설정 -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="10485760"></beans:property>
+	</beans:bean>
+	
 	<context:component-scan base-package="com.webshw.springProj" />
-	
-	
 	
 </beans:beans>
