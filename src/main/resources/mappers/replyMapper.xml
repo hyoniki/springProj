@@ -21,4 +21,9 @@
   		delete from tbl_reply where no = #{no}
   	</delete>
   	
+<!--   	댓글 삭제 시 댓글의 부모글을 알아내기 위한 쿼리문 -->
+  	<select id="getbno" resultType="int">
+  		select bno from tbl_reply where no = #{no}
+  	</select>
+  	
   </mapper>

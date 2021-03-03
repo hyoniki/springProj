@@ -3,6 +3,7 @@ package com.webshw.persistence;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.xml.stream.events.Namespace;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -38,6 +39,11 @@ public class ReplyDAOImpl implements ReplyDAO {
 	public void delete(int no) throws Exception {
 		ses.delete(ns + ".delete", no);
 		
+	}
+
+	@Override
+	public int getBno(int no) throws Exception {
+		return ses.selectOne(ns + ".getbno", no);
 	}
 
 }

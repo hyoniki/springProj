@@ -14,4 +14,6 @@ public interface ReplyDAO {
 	
 	public void delete(int no) throws Exception;
 	
+	// 댓글 삭제 시 게시판 목록 출력할 때 댓글 수를 출력하기 위함
+	public int getBno(int no) throws Exception;
 }

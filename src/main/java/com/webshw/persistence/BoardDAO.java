@@ -35,4 +35,7 @@ public interface BoardDAO {
 
 	public int searchTotal(SearchCriteria scri) throws Exception;
 	
+	public void updateReply(int no, int amount) throws Exception;
+	
+	public void updateViewCnt(int no) throws Exception;
 }

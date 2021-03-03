@@ -87,4 +87,19 @@ public class BoardDAOImpl implements BoardDAO {
 		return ses.selectOne(nameSpace + ".searchTotal", scri);
 	}
 
+	@Override
+	public void updateReply(int no, int amount) throws Exception {
+		Map<String, Object> param = new HashMap<String, Object>();
+		
+		param.put("no", no);
+		param.put("amount", amount);
+		
+		ses.update(nameSpace + ".updateReplyCnt", param);
+	}
+
+	@Override
+	public void updateViewCnt(int no) throws Exception {
+		ses.update(nameSpace + ".updateViewcnt", no);
+	}
+
 }

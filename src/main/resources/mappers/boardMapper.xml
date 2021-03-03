@@ -75,6 +75,15 @@
 
   	</select>
   	
+<!--   	답글이 달렸을 때 replycnt 증가 -->
+  	<update id="updateReplyCnt">
+  		update tbl_board set replycnt = replycnt + #{amount} where no = #{no}
+  	</update>
   	
+<!--   	들어올 때마다 조회 수 1증가 -->
+  	
+  	<update id="updateViewcnt">
+  		update tbl_board set viewcnt = viewcnt + 1 where no = #{no}
+  	</update>
   	
   </mapper>

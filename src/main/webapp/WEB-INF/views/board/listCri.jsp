@@ -98,7 +98,7 @@
 							<c:when test='${board.isdelete == "Y"}'>
 								<tr>
 									<td><strike>${board.no }</strike></td>
-									<td><strike>${board.title }</strike></td>
+									<td><strike>${board.title } <span class="badge badge-secondary">${board.replycnt }</span></strike></td>
 									<td><strike>${board.writer }</strike></td>
 									<td><strike><span class="sendTime"
 											id="${status.count }"><fmt:formatDate
@@ -112,7 +112,7 @@
 									<td>${board.no }</td>
 									<td><a
 										href="/board/read?no=${board.no }&page=${param.page }">
-											${board.title } </a>
+											${board.title } <span class="badge badge-secondary">${board.replycnt }</span></a>
 									<td>${board.writer }</td>
 									<td><span class="sendTime" id="${status.count }"><fmt:formatDate
 												value="${board.regdate }" type="both"

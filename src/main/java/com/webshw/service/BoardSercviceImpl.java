@@ -3,8 +3,13 @@ package com.webshw.service;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.webshw.domain.BoardVO;
 import com.webshw.domain.PagingCriteria;
@@ -28,9 +33,12 @@ public class BoardSercviceImpl implements BoardSercvice {
 		return result;
 	}
 
+	@Transactional(isolation = Isolation.READ_COMMITTED) // 조회수 update 처리된 데이터에 한해 select 되게끔 격리 레벨을 올림
 	@Override
 	public BoardVO read(int no) throws Exception {
 		// 이후에 조회수 증가하는 것을 AOP의 트랜잭션 처리로 마감
+		
+		dao.updateViewCnt(no);
 		return dao.readBoard(no);
 	}
 
