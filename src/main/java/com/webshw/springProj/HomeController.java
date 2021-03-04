@@ -2,6 +2,7 @@ package com.webshw.springProj;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -12,6 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -19,6 +24,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.webshw.util.MediaConfirm;
+import com.webshw.util.uploadFileProcess;
 
 /**
  * Handles requests for the application home page.
@@ -78,6 +86,52 @@ public class HomeController {
 		return "uploadResult";
 	}
 
+	@RequestMapping(value="/uploadAjax", method=RequestMethod.GET)
+	public void uploadAjax() {
+		
+	}
+	
+	@RequestMapping(value="/uploadAjax", method=RequestMethod.POST, produces = "text/plain; charset=UTF-8")
+	public ResponseEntity<String> uploadAjax(HttpServletRequest request, MultipartFile file) {
+		
+		System.out.println("업로드 파일 이름 : " + file.getOriginalFilename());
+		System.out.println("파일 사이즈 : " + file.getSize());
+		System.out.println("업로드 파일의 타입 : " + file.getContentType());
+		System.out.println("파일 separator : " + File.separator);
+		
+		String path = request.getSession().getServletContext().getRealPath("resources/uploads");
+		
+		try {
+//			uploadFile(request, file.getOriginalFilename(), file.getBytes());
+			uploadFileProcess.uploadFile(path, file.getOriginalFilename(), file.getBytes());
+			return new ResponseEntity<String>(file.getOriginalFilename(), HttpStatus.OK);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		
+	}
+	
+	@RequestMapping(value="/displayFile")
+	public ResponseEntity<byte[]> displayFile(String fileName) {
+		InputStream in = null;
+		ResponseEntity<byte[]> entity = null;
+		
+		String ext = fileName.substring(fileName.lastIndexOf(".") + 1);
+		
+		MediaType mType = MediaConfirm.getMediaType(ext);
+		
+		HttpHeaders header = new HttpHeaders();
+		
+		if (mType != null) {
+			header.setContentType(mType);
+		} else {
+			fileName = fileName.substring(fileName.indexOf("_") + 1); // UUID_ 다음 originalFileName을 얻어옴
+		}
+		
+		return entity;
+	}
+	
 	private String uploadFile(HttpServletRequest request, String originalFilename, byte[] bytes) throws IOException {
 		// UUID: Universal Unique ID
 		
@@ -94,5 +148,6 @@ public class HomeController {
 		
 		return saveName;
 	}
+	
 	
 }

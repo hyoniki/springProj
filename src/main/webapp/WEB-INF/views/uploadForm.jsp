@@ -9,7 +9,7 @@
 	function addFilePath(msg) {
 		alert(msg);
 		
-		$(".uploadForm")[0].reset();
+		document.getElementById("uploadForm").reset();
 	}
 </script>
 <style>
