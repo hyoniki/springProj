@@ -17,6 +17,7 @@ public class MediaConfirm {
 	}
 	
 	public static MediaType getMediaType(String ext) {
+//		mediaMap.keySet() // 받아온 키가 있는지 검사하는 메서드
 		return mediaMap.get(ext.toLowerCase());
 	}
 	
