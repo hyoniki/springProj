@@ -26,6 +26,25 @@
 		<beans:property name="maxUploadSize" value="10485760"></beans:property>
 	</beans:bean>
 	
+	<!-- Interceptor 구현 -->
+	<beans:bean id="testInterceptor" class="com.webshw.interceptor.TestInterceptor"></beans:bean>
+	<beans:bean id="loginInterceptor" class="com.webshw.interceptor.LoginInterceptor"></beans:bean>
+	
+	<!-- Interceptor 설정 -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/doInterceptor"/>
+			<beans:ref bean="testInterceptor" />
+		</interceptor>
+	</interceptors>
+	
+	<interceptors>
+		<interceptor>
+			<mapping path="/user/login"/>
+			<beans:ref bean="loginInterceptor"/>
+		</interceptor>
+	</interceptors>
+	
 	<context:component-scan base-package="com.webshw.springProj" />
 	
 </beans:beans>
