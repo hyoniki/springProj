@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ page session="false"%>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -83,6 +83,7 @@
 	<div class="content-wrapper">
 		<c:choose>
 			<c:when test="${boardList !=null }">
+			
 				<table class="table table-condensed">
 					<thead>
 						<tr>

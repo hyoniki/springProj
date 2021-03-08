@@ -42,12 +42,12 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		
 		UserVO vo = (UserVO)modelMap.get("loginMember");
 		
-		System.out.println("객체 있냐? : " + vo.toString());
-		
 		if (vo != null) {
 			
 			logger.info("로그인 성공!!");
 			
+			
+			ses.setMaxInactiveInterval(20 * 3600);
 			ses.setAttribute("loginMember", vo);
 			
 			System.out.println("테슷흐흐흐흐 :" + ses.getAttribute("loginMember").toString());
