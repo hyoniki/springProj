@@ -296,19 +296,22 @@
 			</script>
 			
 			<div class="box-footer">
+			<!-- 로그인한 유저와 작성자가 같을 때만 수정하기 삭제하기 버튼이 보여짐 -->
+			<c:if test="${loginMember.uid == board.writer }">
 				<button type="button" class="btn btn-success" id="rewriteBoard"
 					onclick="location.href='/board/modi?no=${board.no }'">수정하기</button>
 				<button type="button" class="btn btn-info" id="deleteBoard"
 					onclick="location.href='/board/remove?no=${board.no }'">삭제하기</button>
+			</c:if>		
 				<button type="button" class="btn btn-primary"
 					onclick='location.href="/board/listCri?page=${param.page }"'>리스트페이지로</button>
 			</div>
-			
+			<c:if test="${loginMember != null }">
 			<button type="button" class="btn btn-primary" onclick="showReplyBox();">댓글달기</button>
-			
+			</c:if>
 			<div id="inputReplyBox" style="border: 1px dotted gray; display: none">
 				<div>
-					작성자 : <input type="text" name="replyer" id="newReplyWriter" />
+					작성자 : <input type="text" name="replyer" id="newReplyWriter" value="${loginMember.uid }" readonly="readonly"/>
 				</div>
 				<div>
 					댓글 입력 : <input type="text" name="replytext" id="newReplyText" />

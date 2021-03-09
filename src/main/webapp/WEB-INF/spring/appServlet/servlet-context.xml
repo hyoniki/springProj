@@ -29,6 +29,7 @@
 	<!-- Interceptor 구현 -->
 	<beans:bean id="testInterceptor" class="com.webshw.interceptor.TestInterceptor"></beans:bean>
 	<beans:bean id="loginInterceptor" class="com.webshw.interceptor.LoginInterceptor"></beans:bean>
+	<beans:bean id="authInterceptor" class="com.webshw.interceptor.AuthInterceptor"></beans:bean>
 	
 	<!-- Interceptor 설정 -->
 	<interceptors>
@@ -36,12 +37,17 @@
 			<mapping path="/doInterceptor"/>
 			<beans:ref bean="testInterceptor" />
 		</interceptor>
-	</interceptors>
-	
-	<interceptors>
+		
 		<interceptor>
 			<mapping path="/user/login"/>
 			<beans:ref bean="loginInterceptor"/>
+		</interceptor>
+	
+		<interceptor>
+			<mapping path="/board/register"/> <!-- 글 쓰기 -->
+			<mapping path="/board/modi"/> <!-- 글 수정 -->
+			<mapping path="/board/remove"/> <!-- 글 삭제 -->
+			<beans:ref bean="authInterceptor"/>
 		</interceptor>
 	</interceptors>
 	

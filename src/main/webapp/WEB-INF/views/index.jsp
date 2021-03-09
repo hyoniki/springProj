@@ -39,12 +39,9 @@
 	<%@include file="templateAside.jsp" %>	
 	<div class="content-wrapper">
 		<h1>여기가 본문입니다.</h1>
-		
-		
-		${sessionScope.loginMember.uid }가 있음있음있음
 	
 		<c:if test="${loginMember != null}">
-			<form action="/logout" method="post">
+			<form action="/user/logout" method="post">
 				<div>${loginMember.uid}님 방갑습니다! <input type="submit" value="로그아웃" /></div>
 			</form>
 		</c:if>

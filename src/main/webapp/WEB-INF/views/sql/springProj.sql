@@ -80,3 +80,9 @@ insert into tbl_user(uid, upw, uname) values ('hyoniki', '1234', '효니키');
 insert into tbl_user(uid, upw, uname) values ('shw', '1234', '서효원');
 
 select distinct replyer from tbl_reply;
+
+select * from tbl_user;
+
+-- 쿠키의 소멸 시간을 저장할 컬럼 (쿠키 유효 시간)
+alter table tbl_user add column seskey varchar(50) not null default '';
+alter table tbl_user add column sesdeadline timestamp;

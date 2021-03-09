@@ -1,5 +1,6 @@
 package com.webshw.interceptor;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -22,13 +23,12 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		logger.info("로그인 하기 전......................................");
 		
 		HttpSession ses = request.getSession();
-		System.out.println("세션 1 : " + ses.toString());
 		
-		if (ses.getAttribute("loginMember") != null) {
-			ses.removeAttribute("loginMemer");
+		if (ses.getAttribute("loginMember") != null) { // 이전 로그인 정보가 세션에 남아있다면
+			ses.removeAttribute("loginMemer"); // 로그인 정보 삭제
 		}
 		
-		return true;
+		return true; // 이후 인터셉터 또는 컨트롤러에게 제워권을 넘김
 		
 	}
 
@@ -36,7 +36,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
 		
 		HttpSession ses = request.getSession();
-		System.out.println("세션 2 : " + ses);
 		
 		ModelMap modelMap = modelAndView.getModelMap();
 		
@@ -45,14 +44,23 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		if (vo != null) {
 			
 			logger.info("로그인 성공!!");
+			logger.info("로그인 정보" + vo.toString());
 			
-			
-			ses.setMaxInactiveInterval(20 * 3600);
 			ses.setAttribute("loginMember", vo);
 			
-			System.out.println("테슷흐흐흐흐 :" + ses.getAttribute("loginMember").toString());
+			// 쿠키 처리
+			if (request.getParameter("userCookie") != null) { // 자동 로그인이 체크되었을 때
+				logger.info("쿠키 처리...");
+				
+				Cookie loginCook = new Cookie("ssid", ses.getId()); // ssid라는 이름으로 세션id 값 저장
+				loginCook.setPath("/");
+				loginCook.setMaxAge(60 * 60 * 24 * 7); // 일주일 동안
+				response.addCookie(loginCook);
+			}
 			
-			response.sendRedirect("/");
+			String dest = (String)ses.getAttribute("dest");
+			
+			response.sendRedirect((dest != null)? dest : "/");
 		}
 		
 	}

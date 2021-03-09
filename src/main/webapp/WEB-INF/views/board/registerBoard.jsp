@@ -45,7 +45,7 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="writer">작성자 :</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" id="writer" name="writer">
+						<input type="text" class="form-control" id="writer" name="writer" value="${loginMember.uid }">
 					</div>
 				</div>
 				<div class="form-group">
@@ -63,7 +63,7 @@
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-10">
 						<button type="submit" class="btn btn-success">저장</button>
-						<button type="button" class="btn btn-danger" onclick="location.href='/board/listAll'">취소</button>
+						<button type="button" class="btn btn-danger" onclick="history.back();">취소</button>
 					</div>
 				</div>
 			</form>

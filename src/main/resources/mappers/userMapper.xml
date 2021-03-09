@@ -8,5 +8,13 @@
   	<select id="login" resultType="com.webshw.domain.UserVO">
   		select * from tbl_user where uid = #{uid} and upw = #{upw}
   	</select>
-  
+  	
+  	<update id="keepLogin">
+  		update tbl_user set seskey = #{sesId}, sesdeadline = #{cookieAge} where uid = #{uid}
+  	</update>
+  	
+  	<select id="checkUserWithSeskey" resultType="com.webshw.domain.UserVO">
+  		select * from tbl_user where seskey = #{sesKey} and sesdeadline > now()
+  	</select>
+  	
   </mapper>

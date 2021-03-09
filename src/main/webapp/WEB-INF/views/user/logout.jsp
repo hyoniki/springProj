@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="refresh" content="3; url='../'">
 <title>Insert title here</title>
 <script type="text/javascript">
 	
@@ -18,14 +19,9 @@
 </head>
 <body>
 
-	<h3> Login Page</h3>
-
-	<form action="/user/login" method="post">
-		아이디 : <input type="text" name="uid" /><br />
-		비밀번호 : <input type="password" name="upw" /><br />
-		<input type="checkbox" name="userCookie" id="chkCookie"/> Remember Me <br />
-		<input type="submit" value="로그인" onclick="return displayWarn();"/>		
-	</form>
-
+	<h4> 로그아웃 되었습니다...</h4>
+	
+	<h6>잠시 후 첫 페이지 이동합니다...</h6>
+	
 </body>
 </html>
